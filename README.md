@@ -1,71 +1,46 @@
-# Getting Started with Create React App
+### 페이지 라우팅 2 - React Router 응용
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1.Path Variable은 '/:id' 처럼 표현해준다.
 
-## Available Scripts
+```c
+  <Route path="/diary/:id" element={<Diary />} />
+```
 
-In the project directory, you can run:
+2.Path Variable 기능 사용하려면 꺼내줘야한다. useParams 사용하기
 
-### `npm start`
+```c
+    const { id } = useParams();
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3.Query는 웹페이지에 데이터를 전달하는 가장 간단한 방법
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```c
+  /* Query String */
+  /edit?id=10&mode=dark
+```
 
-### `npm test`
+4. Query String는 별도의 처리를 안해도 랩핑이 된다.(라우팅 경로에 영향을 안준다!)
+5. Query String을 꺼내서 사용하려면 useSearchParams 해줘야한다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```c
+  /* 비구조할당해서 자유롭게 이름을 정의해도 된다. */
+  const [searchParams, setSearchParams] = useSearchParams();
+```
 
-### `npm run build`
+6. Page Moving을 하기위해 useNavigate을 사용한다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```c
+  /* useNavigate 함수를 navigate로 받아준다. */
+  const navigate = useNavigate();
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```c
+  /* Link 이용하지않고 이동할수 있다. */
+  /* 주로 로그인 안된 상태의 사용자가 로그인페이지로 이동시키고 싶을때 사용한다. */
+  <button onClick={() => navigate('/home')}>HOME으로 가기</button>
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# study_emotion_diary
+```c
+  /* 뒤로 한번만 이동하니깐 -1를 사용했다. */
+  <button onClick={() => navigate(-1)}>뒤로 가기</button>
+```
