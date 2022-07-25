@@ -44,3 +44,75 @@
   /* 뒤로 한번만 이동하니깐 -1를 사용했다. */
   <button onClick={() => navigate(-1)}>뒤로 가기</button>
 ```
+
+### 프로젝트 기초 공사 1
+
+1. public assets 경로 설정하기
+
+```c
+  const env = process.env;
+  env.PUBLIC_URL = env.PUBLIC_URL || '';
+  <img src= {process.env.PUBLIC_URL + `/assets/emotion4.png`}>
+```
+
+2. props로 컴포넌트 재활용할수 있다
+
+```c
+  const MyHeader = ({ headText, leftChild, rightChild }) => {
+    return (
+      <header>
+        <div className="head_btn_left">{leftChild}</div>
+        <div className="head_text">{headText}</div>
+        <div className="head_btn_right">{rightChild}</div>
+      </header>
+    );
+  };
+```
+
+```c
+  const MyButton = ({ text, type, onClick }) => {
+    const btntype = ['positive', 'negative'].includes(type) ? type : 'default';
+
+    return (
+      <button
+        className={['MyButton', `MyButton_${btntype}`].join(' ')}
+        onClick={onClick}
+      >
+        {text}
+      </button>
+    );
+  };
+
+  MyButton.defaultProps = {
+    type: 'default',
+  };
+```
+
+```c
+  <MyHeader
+        headText={'App'}
+        leftChild={
+          <MyButton text={'왼쪽버튼'} onClick={() => alert('왼쪽클릭')} />
+        }
+        rightChild={
+          <MyButton
+            text={'오른쪽버튼'}
+            onClick={() => alert('오른쪽클릭')}
+          />
+        }
+      />
+```
+
+```c
+   <MyButton
+     text={'버튼'}
+     onClick={() => alert('버튼클릭')}
+     type={'positive'}
+   />
+   <MyButton
+     text={'버튼'}
+     onClick={() => alert('버튼클릭')}
+     type={'negative'}
+   />
+   <MyButton text={'버튼'} onClick={() => alert('버튼클릭')} />
+```
