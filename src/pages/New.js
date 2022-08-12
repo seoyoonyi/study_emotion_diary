@@ -1,9 +1,9 @@
-import React from 'react';
+import DiaryEditor from '../components/DiaryEditor';
 
 function New() {
   return (
     <div>
-      <h2>여기는 New입니다</h2>
+      <DiaryEditor />
     </div>
   );
 }
