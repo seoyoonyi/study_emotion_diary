@@ -116,3 +116,53 @@
    />
    <MyButton text={'버튼'} onClick={() => alert('버튼클릭')} />
 ```
+
+### 프로젝트 기초 공사 2
+
+### 페이지 구현 - 홈 (/)
+
+1. diaryList props가 정상적으로 동작안할수 있으니 defaultProps 사용
+
+```c
+  DiaryList.defaultProps = {
+    diaryList: [],
+  };
+```
+
+2. 해당월에 작성된 글 필터링
+
+```c
+  diaryList.filter((it) => firstDay <= it.date && it.date <= lastDay)
+```
+
+3.  diaryList depth에 전달을 안해주면 useEffect 함수가 diaryList가 바뀌었을때 동작 안함. diaryList 바뀌면 동작해야하는 이유는 diaryList 바뀌었다는 것은 추가,수정,삭제되었을때 의미함. 그때 diaryList도 바꿔줘야 한다.
+
+```c
+  useEffect(() => {
+    if (diaryList.length >= 1) {
+      const firstDay = new Date(
+        curDate.getFullYear(),
+        curDate.getMonth(),
+        1
+      ).getTime();
+
+      const lastDay = new Date(
+        curDate.getFullYear(),
+        curDate.getMonth() + 1,
+        0
+      ).getTime();
+
+      setData(
+        diaryList.filter((it) => firstDay <= it.date && it.date <= lastDay)
+      );
+    }
+  }, [diaryList, curDate]);
+```
+
+4. diaryList.sort를 사용해버리면 원본자체가 정렬되어버림. 그래서 깊은 복사를 통해 사용해야함
+
+```c
+    const copyList = JSON.parse(JSON.stringify(diaryList));
+```
+
+5. sort함수를 다시 만나면 더 공부하자!
