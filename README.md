@@ -166,3 +166,21 @@
 ```
 
 5. sort함수를 다시 만나면 더 공부하자!
+
+### 페이지 구현 - 일기 쓰기 (/new)
+
+1. navigate(주소, {replace: true or false})
+   > true 사용 시, navigate에 적힌 주소로 넘어간 후 뒤로가기를 하더라도 방금의 페이지는 돌아오지 않습니다.
+
+```c
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    if (content.length < 1) {
+      contentRef.current.focus();
+      return;
+    }
+    onCreate(date, content, emotion);
+    navigate('/', { replace: true });
+  };
+```
