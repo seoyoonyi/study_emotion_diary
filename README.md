@@ -184,3 +184,25 @@
     navigate('/', { replace: true });
   };
 ```
+
+### 프로젝트 최적화
+
+1. 다른 함수안에 useState 함수를 사용하게 되면 리렌더링 하지만 react.memo에서 비교했을때 다른 props으로 비교된다!! useState로 상태를 변화하는 함수로 사용하면 동일한 id로 인지하고!! 이 함수 기본적으로 useCallback된 함수가 된다!! 다른 함수안에 useState 함수를 넣은 상태면 useCallback함수를 넣어주면 된다!
+
+```c
+const ControlMenu = React.memo(({ value, onChange, optionList }) => {
+  return (
+    <select
+      className="ControlMenu"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    >
+      {optionList.map((it, idx) => (
+        <option key={idx} value={it.value}>
+          {it.name}
+        </option>
+      ))}
+    </select>
+  );
+});
+```
